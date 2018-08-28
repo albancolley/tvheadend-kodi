@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TVHeadEnd Edit</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
+  <!-- development version, includes helpful console warnings -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.js"></script>
+</head>
+
+<body class="has-navbar-fixed-top">
+    <div id="app-2">
+      <!-- Main container -->
+      <nav class="navbar is-fixed-top">
+<!--      <nav class="level"> -->
+        <!-- Left side -->
+        <!-- <div class="level-left"> -->
+          <!-- <div class="level-item"> -->
+          <div class="navbar-item">
+            <p class="subtitle is-5">
+              <strong>{{total}}</strong> recordings
+            </p>
+          <!-- </div> -->
+        </div>
+          <hr class="navbar-divider">
+          <div class="navbar-item">
+          <!-- <div class="level-item"> -->
+            <div class="field is-horizontal">
+              <div class="field-body">
+                <div class="field">
+                  <p class="control is-expanded">
+                    <input v-model="term" class="input" type="text" placeholder="Search Text">
+                  </p>
+                </div>
+                <div class="field">
+                  <p class="control">
+                    <div class="select">
+                      <select v-model="newOnly">
+          <option>All</option>
+          <option>New</option>
+        </select>
+                    </div>
+                    <p>
+                </div>
+                <div class="field">
+                  <p class="control">
+                    <button class="button" v-on:click="search()">Filter</button>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        <!-- </div> -->
+        <div class="navbar-end">
+                  <div class="navbar-item">
+            <div class="field is-horizontal">
+              <div class="field-body">
+                <div class="field">
+                  <p class="control">
+                    <div class="select">
+                      <select v-model="sort">
+        <option value=1>Name, Date</option>
+        <option value=2>Name, Series, Episode</option>
+      </select>
+                    </div>
+                    <p>
+                </div>
+                <div class="field">
+                  <p class="control">
+                    <button class="button" v-on:click="search()">Sort</button>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+    <!--  </nav> -->
+    </nav>
+    <section class="section">
+
+      <table class="table  is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+        <thead>
+          <tr>
+            <th>Title <i class="fas fa-sort"></i></th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="entry in entries" :key="entry._id">
+            <td>
+              <div class="has-text-weight-bold">{{entry.disp_title}}</div>
+              <div>{{entry.start * 1000 | moment}}</div>
+            </td>
+            <td>
+              <div>{{entry.disp_subtitle}}</div>
+              <table class="table  is-bordered is-fullwidth">
+                <thead>
+                  <tr>
+                    <th width=10>Type</th>
+                    <th>Name</th>
+                    <th width=100>Year</th>
+                    <th width=100>Series#</th>
+                    <th width=100>Episode#</th>
+                    <th width=10></th>
+                  </tr>
+
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div class="control">
+                        <div class="select">
+                          <select v-model="entry.kodi_type">
+                            <option disabled value="">Please select one</option>
+                            <option>Film</option>
+                            <option>TV</option>
+                            <option>Dup</option>
+                          </select>
+                        </div>
+                      </div>
+                    </td>
+                    <td><input v-model="entry.kodi_disp_title" class="input" type="text" placeholder="Text input"></td>
+                    <td><input v-model="entry.kodi_year" class="input" type="text" placeholder="Text input"></td>
+                    <td><input v-model="entry.kodi_series" class="input" type="text" placeholder="Text input"></td>
+                    <td><input v-model="entry.kodi_episode" class="input" type="text" placeholder="Text input"></td>
+                    <td>
+                      <div class="button" v-on:click="save($event, entry)">Save</div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+  </section>
+  <script src="//unpkg.com/@feathersjs/client@^3.0.0/dist/feathers.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>

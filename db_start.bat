@@ -1,0 +1,11 @@
+
+SET CURRENT_DIR=%CD%
+
+SET MONGODB_VERSION=4.0
+SET MONGODB_PATH=C:\Program Files\MongoDB\Server\%MONGODB_VERSION%
+SET MONGODB_DB_PATH=%CURRENT_DIR%\data
+
+
+if not exist "%MONGODB_DB_PATH%" mkdir "%MONGODB_DB_PATH%"
+
+"%MONGODB_PATH%\bin\mongod.exe" --dbpath "%MONGODB_DB_PATH%"
