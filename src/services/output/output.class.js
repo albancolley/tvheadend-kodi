@@ -12,10 +12,13 @@ class Service {
   }
 
   async find(params) {
-    const entries = this.app.service('entries');
+    const entries_service = this.app.service('entries');
     params.paginate=false;
     params.query.kodi_type = {$in : ['TV','Film']};
-    return entries.find(params);
+    const entries = await entries_service.find(params);
+    const result = nunjucks.render('output.sh', { entries });
+    return result;
+
   }
 
   async get(id, params) {
