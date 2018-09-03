@@ -1,6 +1,19 @@
 // eslint-disable-next-line no-unused-vars
 const nunjucks = require('nunjucks');
-nunjucks.configure('templates', {autoescape: true});
+var path = require('path')
+
+var env = new nunjucks.Environment(new nunjucks.FileSystemLoader('templates'));
+
+//nunjucks.configure('templates', {autoescape: false});
+
+//const env = new nunjucks.Environment();
+
+env.addFilter('extension', function(str) {
+    console.log(str)
+    console.log(path.extname(str))
+    return path.extname(str);
+});
+
 
 module.exports = function(app) {
   // Add your custom middleware here. Remember that
@@ -18,9 +31,13 @@ module.exports = function(app) {
     };
     const tv_folder='/data/kodi/tv/';
     const film_folder='/data/kodi/movies/';
+
     entries_service.find(params).then(entries => {
-      const result = nunjucks.render('output.sh', {entries, tv_folder, film_folder});
+
+      const result = env.render('output.sh', {entries, tv_folder, film_folder});
       res.send(result);
+    }).catch((err) => {
+      console.log(err);
     });
   });
 };
