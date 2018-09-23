@@ -16,8 +16,10 @@ const app2 = new Vue({
     total: 0,
     term: '',
     newOnly: 'All',
+    hd: 'All',
     limit: 20,
-    sort: 1
+    sort: 1,
+    page:1
   },
   created() {
     entries.find().then(json => {
@@ -56,7 +58,16 @@ const app2 = new Vue({
           $nin: ['TV', 'Film', 'Dup']
         };
       }
-      let sort = {
+      if (this.newOnly === 'Done') {
+        query.kodi_type = {
+          $in: ['TV', 'Film', 'Dup']
+        };
+      }
+      if (this.hd === 'HD') {
+        query.channelname = {
+          $search: "HD"
+        };
+      }      let sort = {
         disp_title: 1,
         start: 1
       };
@@ -70,8 +81,17 @@ const app2 = new Vue({
           start: 1
         };
       }
+      if (this.sort == '3' )
+      {
+        sort = {
+          disp_title: 1,
+          disp_subtitle: 1,
+          start: 1
+        };
+      }
       console.log(sort);
       query.$sort = sort;
+      query.$skip=this.limit * (this.page - 1);
       entries.find({query}).then(json => {
         this.entries = json.data;
         this.total = json.total;

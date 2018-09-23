@@ -6,5 +6,8 @@
     "default": 10,
     "max": 50
   },
-  "mongodb": "mongodb://localhost:27017/tvheadend"
+  "mongodbz": "mongodb://localhost:27017/tvheadend",
+  "mongodbzz": "mongodb+srv://tvheadend:test@tvheadend-awtwk.mongodb.net/tvheadend?retryWrites=true",
+  "mongodb": "MONGOTVH_URL",
+  "mongodb_collection":"tvheadend"
 }

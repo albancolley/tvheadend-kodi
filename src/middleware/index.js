@@ -9,11 +9,12 @@ var env = new nunjucks.Environment(new nunjucks.FileSystemLoader('templates'));
 //const env = new nunjucks.Environment();
 
 env.addFilter('extension', function(str) {
-    console.log(str)
-    console.log(path.extname(str))
     return path.extname(str);
 });
 
+env.addFilter('pad', function(str, targetLength, padString) {
+    return str.padStart(targetLength, padString | "0" );
+});
 
 module.exports = function(app) {
   // Add your custom middleware here. Remember that
@@ -29,12 +30,14 @@ module.exports = function(app) {
     params.query.kodi_type = {
       $in: ['TV', 'Film']
     };
+
+    const src_folder='/data/tv/';
     const tv_folder='/data/kodi/tv/';
     const film_folder='/data/kodi/movies/';
 
     entries_service.find(params).then(entries => {
 
-      const result = env.render('output.sh', {entries, tv_folder, film_folder});
+      const result = env.render('full_output.sh', {entries, tv_folder, film_folder, src_folder});
       res.send(result);
     }).catch((err) => {
       console.log(err);

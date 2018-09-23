@@ -13,71 +13,100 @@
 </head>
 
 <body class="has-navbar-fixed-top">
-    <div id="app-2">
-      <!-- Main container -->
-      <nav class="navbar is-fixed-top">
-<!--      <nav class="level"> -->
-        <!-- Left side -->
-        <!-- <div class="level-left"> -->
-          <!-- <div class="level-item"> -->
-          <div class="navbar-item">
-            <p class="subtitle is-5">
-              <strong>{{total}}</strong> recordings
-            </p>
-          <!-- </div> -->
-        </div>
-          <hr class="navbar-divider">
-          <div class="navbar-item">
-          <!-- <div class="level-item"> -->
-            <div class="field is-horizontal">
-              <div class="field-body">
-                <div class="field">
-                  <p class="control is-expanded">
-                    <input v-model="term" class="input" type="text" placeholder="Search Text">
-                  </p>
-                </div>
-                <div class="field">
-                  <p class="control">
-                    <div class="select">
-                      <select v-model="newOnly">
+  <div id="app-2">
+    <!-- Main container -->
+    <nav class="navbar is-fixed-top">
+      <!--      <nav class="level"> -->
+      <!-- Left side -->
+      <!-- <div class="level-left"> -->
+      <!-- <div class="level-item"> -->
+      <div class="navbar-item">
+        <p class="subtitle is-5">
+          <strong>{{total}}</strong> recordings
+        </p>
+        <!-- </div> -->
+      </div>
+      <hr class="navbar-divider">
+      <div class="navbar-item">
+        <!-- <div class="level-item"> -->
+        <div class="field is-horizontal">
+          <div class="field-body">
+            <div class="field">
+              <p class="control is-expanded">
+                <input v-model="term" class="input" type="text" placeholder="Search Text">
+              </p>
+            </div>
+            <div class="field">
+              <p class="control">
+                <div class="select">
+                  <select v-model="newOnly">
           <option>All</option>
           <option>New</option>
+          <option>Done</option>
         </select>
-                    </div>
-                    <p>
                 </div>
-                <div class="field">
-                  <p class="control">
-                    <button class="button" v-on:click="search()">Filter</button>
-                  </p>
+                <p>
+            </div>
+            <div class="field">
+              <p class="control">
+                <div class="select">
+                  <select v-model="hd">
+                        <option>All</option>
+          <option>HD</option>
+        </select>
                 </div>
-              </div>
+                <p>
+            </div>
+            <div class="field">
+              <p class="control">
+                <button class="button" v-on:click="search()">Filter</button>
+              </p>
             </div>
           </div>
-        <!-- </div> -->
-        <div class="navbar-end">
-                  <div class="navbar-item">
-            <div class="field is-horizontal">
-              <div class="field-body">
-                <div class="field">
-                  <p class="control">
-                    <div class="select">
-                      <select v-model="sort">
+        </div>
+      </div>
+      <!-- </div> -->
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <div class="field is-horizontal">
+            <div class="field-body">
+              <div class="field">
+                <p class="control">
+                  <div class="select">
+                    <select v-model="sort">
         <option value=1>Name, Date</option>
         <option value=2>Name, Series, Episode</option>
+        <option value=3>Name, Description</option>
       </select>
-                    </div>
-                    <p>
-                </div>
-                <div class="field">
-                  <p class="control">
-                    <button class="button" v-on:click="search()">Sort</button>
-                  </p>
-                </div>
+                  </div>
+                  <p>
+              </div>
+              <div class="field">
+                <p class="control">
+                  <input v-model="page" class="input" type="text" placeholder="Page">
+                </p>
+              </div>
+              <div class="field">
+                <p class="control">
+                  <div class="select">
+                    <select v-model="limit">
+        <option value=10>10</option>
+        <option value=20>20</option>
+        <option value=50>50</option>
+        <option value=100>100</option>
+      </select>
+                  </div>
+                  <p>
+              </div>
+              <div class="field">
+                <p class="control">
+                  <button class="button" v-on:click="search()">Sort</button>
+                </p>
               </div>
             </div>
           </div>
-    <!--  </nav> -->
+        </div>
+        <!--  </nav> -->
     </nav>
     <section class="section">
 
@@ -93,6 +122,7 @@
             <td>
               <div class="has-text-weight-bold">{{entry.disp_title}}</div>
               <div>{{entry.start * 1000 | moment}}</div>
+              <div>{{entry.channelname}}</div>
             </td>
             <td>
               <div>{{entry.disp_subtitle}}</div>
@@ -137,10 +167,10 @@
         </tbody>
       </table>
       </div>
-  </section>
-  <script src="//unpkg.com/@feathersjs/client@^3.0.0/dist/feathers.js"></script>
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="app.js"></script>
+    </section>
+    <script src="//unpkg.com/@feathersjs/client@^3.0.0/dist/feathers.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="app.js"></script>
 </body>
 
 </html>
